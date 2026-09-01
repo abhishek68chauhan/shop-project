@@ -1,0 +1,31 @@
+{
+  "name": "shopnest",
+  "version": "1.0.0",
+  "author": "Shivansh Vasu",
+  "description": "Full-Stack MERN E-Commerce App",
+  "scripts": {
+    "dev": "concurrently npm:dev:*",
+    "dev:server": "npm run dev --prefix backend",
+    "dev:client": "npm start --prefix frontend",
+    "start": "set PORT=3002 && react-scripts start",
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "render-build": "npm run build",
+    "seed": "npm run seed --prefix backend"
+  },
+  "proxy": "http://localhost:5000",
+  "dependencies": {
+    "concurrently": "^8.2.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
