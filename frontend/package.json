@@ -8,8 +8,8 @@
     "dev:server": "npm run dev --prefix backend",
     "dev:client": "npm start --prefix frontend",
     "start": "set PORT=3002 && react-scripts start",
-    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
-    "render-build": "npm run build",
+    "build": "vite build",
+    "render-build": "vite build",
     "seed": "npm run seed --prefix backend"
   },
   "proxy": "http://localhost:5000",
