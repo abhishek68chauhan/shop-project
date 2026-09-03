@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import { apiFetch } from '../utils/api';
 
 const Profile = () => {
   const { user, logout } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const Profile = () => {
     }
     const fetchMyOrders = async () => {
       try {
-        const res = await fetch('/api/orders/myorders', {
+        const res = await apiFetch('/api/orders/myorders', {
           headers: { Authorization: `Bearer ${user.token}` }
         });
         const data = await res.json();
@@ -24,8 +25,8 @@ const Profile = () => {
         } else {
           // Token obsolete or 401: clear and bounce
           if (res.status === 401) {
-             logout();
-             navigate('/login');
+            logout();
+            navigate('/login');
           }
           setOrders([]);
         }
@@ -78,10 +79,10 @@ const Profile = () => {
                 <p style={{ color: '#a1a1aa', fontSize: '0.9rem' }}>Total: <strong style={{ color: '#10b981' }}>₹{order.totalAmount.toFixed(2)}</strong></p>
               </div>
               <div>
-                <span style={{ 
-                  background: order.status === 'Delivered' ? 'rgba(16,185,129,0.1)' : order.status === 'Shipped' ? 'rgba(59,130,246,0.1)' : 'rgba(245,158,11,0.1)', 
+                <span style={{
+                  background: order.status === 'Delivered' ? 'rgba(16,185,129,0.1)' : order.status === 'Shipped' ? 'rgba(59,130,246,0.1)' : 'rgba(245,158,11,0.1)',
                   color: order.status === 'Delivered' ? '#10b981' : order.status === 'Shipped' ? '#3b82f6' : '#f59e0b',
-                  padding: '8px 16px', borderRadius: '20px', fontWeight: 'bold' 
+                  padding: '8px 16px', borderRadius: '20px', fontWeight: 'bold'
                 }}>
                   {order.status}
                 </span>

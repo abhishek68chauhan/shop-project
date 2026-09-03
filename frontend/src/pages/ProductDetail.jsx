@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cartSlice';
+import { apiFetch } from '../utils/api';
 import '../styles/product.css';
 
 const ProductDetail = () => {
@@ -13,7 +14,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`/api/products/${id}`);
+        const res = await apiFetch(`/api/products/${id}`);
         const data = await res.json();
         setProduct(data);
       } catch (error) {
@@ -43,7 +44,7 @@ const ProductDetail = () => {
 
   return (
     <div className="product-detail-wrapper" style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      
+
       {/* Breadcrumb Navigation */}
       <div style={{ color: '#a1a1aa', marginBottom: '20px', fontSize: '0.95rem' }}>
         <Link to="/" style={{ color: '#f97316' }}>Home</Link> / <Link to="/shop" style={{ color: '#f97316' }}>Shop</Link> / {product.category} / <span style={{ color: '#fff' }}>{product.name}</span>
@@ -57,7 +58,7 @@ const ProductDetail = () => {
 
         {/* Right Side: Information Block */}
         <div className="detail-info">
-          
+
           <h2 style={{ fontSize: '2.8rem', marginBottom: '10px' }}>{product.name}</h2>
 
           <p className="detail-price" style={{ fontSize: '2.5rem', margin: '15px 0' }}>₹{product.price.toFixed(2)}</p>
@@ -74,7 +75,7 @@ const ProductDetail = () => {
               Add to Shopping Cart
             </button>
           </div>
-          
+
           <p style={{ marginTop: '20px', color: product.stock > 0 ? '#10b981' : '#ef4444', fontWeight: '600' }}>
             {product.stock > 0 ? `● In Stock (${product.stock} units available)` : `● Temporarily Out of Stock`}
           </p>

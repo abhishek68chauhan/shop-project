@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { apiFetch } from '../utils/api';
 
 const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const AdminDashboard = () => {
 
     const fetchStats = async () => {
       try {
-        const res = await fetch('/api/analytics', {
+        const res = await apiFetch('/api/analytics', {
           headers: { Authorization: `Bearer ${user.token}` }
         });
         const data = await res.json();
@@ -59,8 +60,8 @@ const AdminDashboard = () => {
         <img src="/ShopNestLogo.png" alt="Logo" style={{ height: '40px', width: '40px', borderRadius: '8px', objectFit: 'cover', filter: 'drop-shadow(0 0px 10px rgba(249, 115, 22, 0.3))' }} />
         <h2 style={{ margin: 0 }}>Admin Dashboard</h2>
       </div>
-      <p style={{ color: '#a1a1aa', marginBottom: '30px', fontSize: '1.1rem' }}>Welcome back, <span style={{color: '#fff'}}>{user?.name}</span></p>
-      
+      <p style={{ color: '#a1a1aa', marginBottom: '30px', fontSize: '1.1rem' }}>Welcome back, <span style={{ color: '#fff' }}>{user?.name}</span></p>
+
       {stats ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
           <div style={cardStyle}>

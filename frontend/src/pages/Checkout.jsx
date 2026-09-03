@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { clearCart } from '../redux/cartSlice';
+import { apiFetch } from '../utils/api';
 
 const Checkout = () => {
   const { user } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const Checkout = () => {
 
   const handlePayment = async () => {
     try {
-      const orderRes = await fetch('/api/payment/order', {
+      const orderRes = await apiFetch('/api/payment/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: totalPrice })
@@ -43,15 +44,15 @@ const Checkout = () => {
         description: 'Test Transaction',
         order_id: orderData.id,
         handler: async function (response) {
-          const verifyRes = await fetch('/api/payment/verify', {
+          const verifyRes = await apiFetch('/api/payment/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(response)
           });
           if (verifyRes.ok) {
-            const saveOrderRes = await fetch('/api/orders', {
+            const saveOrderRes = await apiFetch('/api/orders', {
               method: 'POST',
-              headers: { 
+              headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${user.token}`
               },
@@ -82,7 +83,7 @@ const Checkout = () => {
           color: '#f97316'
         }
       };
-      
+
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
@@ -91,9 +92,9 @@ const Checkout = () => {
   };
 
   const bypassPayment = async () => {
-    const saveOrderRes = await fetch('/api/orders', {
+    const saveOrderRes = await apiFetch('/api/orders', {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${user.token}`
       },
@@ -126,11 +127,11 @@ const Checkout = () => {
       <div className="checkout-content">
         <form onSubmit={handleSubmit} className="shipping-form">
           <h3>Shipping Address</h3>
-          <input type="text" placeholder="Full Name" required value={address.fullName} onChange={(e) => setAddress({...address, fullName: e.target.value})} />
-          <input type="text" placeholder="Street" required value={address.street} onChange={(e) => setAddress({...address, street: e.target.value})} />
-          <input type="text" placeholder="City" required value={address.city} onChange={(e) => setAddress({...address, city: e.target.value})} />
-          <input type="text" placeholder="Postal Code" required value={address.postalCode} onChange={(e) => setAddress({...address, postalCode: e.target.value})} />
-          <input type="text" placeholder="Country" required value={address.country} onChange={(e) => setAddress({...address, country: e.target.value})} />
+          <input type="text" placeholder="Full Name" required value={address.fullName} onChange={(e) => setAddress({ ...address, fullName: e.target.value })} />
+          <input type="text" placeholder="Street" required value={address.street} onChange={(e) => setAddress({ ...address, street: e.target.value })} />
+          <input type="text" placeholder="City" required value={address.city} onChange={(e) => setAddress({ ...address, city: e.target.value })} />
+          <input type="text" placeholder="Postal Code" required value={address.postalCode} onChange={(e) => setAddress({ ...address, postalCode: e.target.value })} />
+          <input type="text" placeholder="Country" required value={address.country} onChange={(e) => setAddress({ ...address, country: e.target.value })} />
           <div className="checkout-summary">
             <h4>Total to Pay: ₹{totalPrice.toFixed(2)}</h4>
             <button type="submit" className="btn">Pay Now</button>

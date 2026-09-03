@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';
+import { apiFetch } from '../utils/api';
 import '../styles/product.css';
 
 const Shop = () => {
@@ -10,7 +11,7 @@ const Shop = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch('/api/products');
+        const res = await apiFetch('/api/products');
         const data = await res.json();
         setProducts(data);
       } catch (error) {
@@ -27,9 +28,9 @@ const Shop = () => {
   return (
     <div className="shop-container">
       <h2>All Products</h2>
-      <input 
-        type="text" 
-        placeholder="Search products..." 
+      <input
+        type="text"
+        placeholder="Search products..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="search-bar"
