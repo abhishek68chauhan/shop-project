@@ -29,7 +29,7 @@
 
 .cart-item:hover {
   transform: translateX(5px);
-  border-color: rgba(249, 115, 22, 0.2);
+  border-color: rgba(183, 129, 91, 0.2);
 }
 
 .cart-item-image {
