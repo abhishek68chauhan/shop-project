@@ -8,6 +8,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "start": "npm run dev:server &&npm run dev:client",
     "install": "cd backend && npm install",
     "dev:server": "cd backend && npm run dev",
     "dev:client": "cd frontend && npm start",
