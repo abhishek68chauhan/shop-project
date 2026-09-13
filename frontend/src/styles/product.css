@@ -109,7 +109,7 @@
 }
 
 .search-bar:focus {
-  border-color: #f97316;
+  border-color: #fd7e23;
   box-shadow: 0 0 0 3px rgba(53, 50, 48, 0.1);
 }
 
